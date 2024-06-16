@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <UserSecretsId>946f5bd6-83a8-4d1a-a921-ceda32f758aa</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Features\SearchSystem\**" />
+    <Content Remove="Features\SearchSystem\**" />
+    <EmbeddedResource Remove="Features\SearchSystem\**" />
+    <None Remove="Features\SearchSystem\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lucene.Net" Version="4.8.0-beta00016" />
+    <PackageReference Include="Lucene.Net.Analysis.Common" Version="4.8.0-beta00016" />
+    <PackageReference Include="Lucene.Net.Queries" Version="4.8.0-beta00016" />
+    <PackageReference Include="Lucene.Net.QueryParser" Version="4.8.0-beta00016" />
+    <PackageReference Include="MassTransit.EntityFrameworkCore" Version="8.2.0-develop.1663" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.0-develop.1663" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Chefs\Aggregates\Repositories\" />
+    <Folder Include="Features\Chefs\Aggregates\Root\" />
+    <Folder Include="Features\Notifications\Chefs\" />
+    <Folder Include="Features\Quotations\Apis\Responses\" />
+  </ItemGroup>
+
+</Project>
