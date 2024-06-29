@@ -44,6 +44,7 @@ namespace ChefReservationsMs.Features.Quotations.RequestQuotations
 
         public State Requested { get; }
         public State PendingChefConfirmation { get; }
+        public State Confirmed { get; }
         public State Cancelled { get; }
         public State Expired { get; }
 

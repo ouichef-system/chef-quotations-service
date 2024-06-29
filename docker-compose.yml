@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  chefreservationsms:
+    image: ${DOCKER_REGISTRY-}chefreservationsms
+    build:
+      context: .
+      dockerfile: ChefReservationsMs/Dockerfile

@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34321.82
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChefReservationsMs", "ChefReservationsMs\ChefReservationsMs.csproj", "{0867B25A-8514-4B82-940B-E5F94EAC9F57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChefReservationsMsTest", "ChefReservationsMsTest\ChefReservationsMsTest.csproj", "{031131AE-5D1A-4CFB-ADC0-06483483BE90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChefReservationsMsTest", "ChefReservationsMsTest\ChefReservationsMsTest.csproj", "{031131AE-5D1A-4CFB-ADC0-06483483BE90}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A10FC853-6F5A-4C8D-AAEC-14F60230756C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{031131AE-5D1A-4CFB-ADC0-06483483BE90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{031131AE-5D1A-4CFB-ADC0-06483483BE90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{031131AE-5D1A-4CFB-ADC0-06483483BE90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A10FC853-6F5A-4C8D-AAEC-14F60230756C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A10FC853-6F5A-4C8D-AAEC-14F60230756C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A10FC853-6F5A-4C8D-AAEC-14F60230756C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A10FC853-6F5A-4C8D-AAEC-14F60230756C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
