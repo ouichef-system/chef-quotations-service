@@ -6,7 +6,7 @@ using ChefReservationsMs.Features.Chefs.Apis.Views;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Collections.ObjectModel;
 
-namespace ChefReservationsMs.Features.Quotations.Apis
+namespace ChefReservationsMs.Features.Chefs.Apis
 {
     public static class ChefsApi
     {
@@ -14,17 +14,16 @@ namespace ChefReservationsMs.Features.Quotations.Apis
         {
             var chefs = endpoint.MapGroup("/chefs");
 
-            chefs.MapGet("/{chefId}/request-for-quotations", AllPendingRequestForQuotation);
+            chefs.MapGet("/", RegisterChef);
         }
 
-        public static async Task<Ok<ViewModel<ReadOnlyCollection<ChefRequestForQuotation>>>> AllPendingRequestForQuotation(
+        public static async Task<Ok<ViewModel<ReadOnlyCollection<ChefRequestForQuotation>>>> RegisterChef(
             RequestHandler<PendingChefRequestForQuotation, ReadOnlyCollection<ChefRequestForQuotation>> getRequestForQuotations,
-            Guid chefId, 
             ChefReservationsDbContext dbContext, 
             ILoggerFactory loggerFactory,
             CancellationToken cancellationToken)
         {
-            var logger = loggerFactory.CreateLogger(nameof(QuotationsApi));
+            var logger = loggerFactory.CreateLogger(nameof(RegisterChef));
 
             try
             {

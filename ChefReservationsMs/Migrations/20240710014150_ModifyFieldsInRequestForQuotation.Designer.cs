@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ChefReservationsMs.Common_Services.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChefReservationsMs.Migrations
 {
     [DbContext(typeof(ChefReservationsDbContext))]
-    partial class ChefReservationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240710014150_ModifyFieldsInRequestForQuotation")]
+    partial class ModifyFieldsInRequestForQuotation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,7 +67,7 @@ namespace ChefReservationsMs.Migrations
                         new
                         {
                             Id = new Guid("41d83dd8-0fa8-46ab-8b51-2679009a20db"),
-                            CreatedAt = new DateTime(2024, 8, 20, 2, 36, 45, 530, DateTimeKind.Utc).AddTicks(7000),
+                            CreatedAt = new DateTime(2024, 7, 10, 1, 41, 47, 836, DateTimeKind.Utc).AddTicks(6794),
                             CreatedBy = "jbasalo",
                             Description = "Chef italiano",
                             IsActive = true,
@@ -104,7 +107,7 @@ namespace ChefReservationsMs.Migrations
                         new
                         {
                             Id = new Guid("4827d138-5ff1-4714-95a1-414d950aa817"),
-                            CreatedAt = new DateTime(2024, 8, 20, 2, 36, 45, 530, DateTimeKind.Utc).AddTicks(8171),
+                            CreatedAt = new DateTime(2024, 7, 10, 1, 41, 47, 836, DateTimeKind.Utc).AddTicks(8687),
                             CreatedBy = "jbasalo",
                             CuisineName = "Pasta"
                         });
@@ -159,7 +162,7 @@ namespace ChefReservationsMs.Migrations
                         {
                             Id = new Guid("13743cf1-650b-4522-91fc-7b7210a71419"),
                             ChefId = new Guid("41d83dd8-0fa8-46ab-8b51-2679009a20db"),
-                            CreatedAt = new DateTime(2024, 8, 20, 2, 36, 45, 531, DateTimeKind.Utc).AddTicks(149),
+                            CreatedAt = new DateTime(2024, 7, 10, 1, 41, 47, 837, DateTimeKind.Utc).AddTicks(1959),
                             CreatedBy = "jbasalo",
                             CuisineTypeId = new Guid("4827d138-5ff1-4714-95a1-414d950aa817"),
                             MealTypes = "Dinner,Lunch",
@@ -288,6 +291,7 @@ namespace ChefReservationsMs.Migrations
                         .HasColumnType("bytea");
 
                     b.Property<string>("StoveType")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")

@@ -1,7 +1,8 @@
-﻿using ChefReservationsMs.Features.Quotations.StateMachines.Responses;
+﻿using ChefReservationsMs.Features.RequestQuotations.Aggregate.Events;
+using ChefReservationsMs.Features.RequestQuotations.Aggregate.Responses;
 using MassTransit;
 
-namespace ChefReservationsMs.Features.Quotations.RequestQuotations
+namespace ChefReservationsMs.Features.RequestQuotations.Aggregate
 {
     public class RequestForQuotationStateMachine : MassTransitStateMachine<RequestForQuotation>
     {
@@ -19,8 +20,7 @@ namespace ChefReservationsMs.Features.Quotations.RequestQuotations
                     context.Saga.ChefPreference = context.Message.ChefPreference;
                     context.Saga.ContactEmail = context.Message.ContactEmail;
                     context.Saga.ContactPhoneNumber = context.Message.ContactPhoneNumber;
-                    context.Saga.CuisinePreference = context.Message.CuisinePreference;
-                    context.Saga.OtherCuisinePreference = context.Message.OtherCuisinePreference;
+                    context.Saga.CuisinePreferences = context.Message.CuisinePreferences;
                     context.Saga.DietaryRestrictions = context.Message.DietaryRestrictions;
                     context.Saga.HasWorkingOven = context.Message.HasWorkingOven;
                     context.Saga.Location = context.Message.Location;
@@ -31,7 +31,21 @@ namespace ChefReservationsMs.Features.Quotations.RequestQuotations
                     context.Saga.ReservationDate = new DateTimeOffset(context.Message.ReservationDate.DateTime, TimeSpan.Zero);
                     context.Saga.StoveType = context.Message.StoveType;
                 })
-                .TransitionTo(Requested));
+                .TransitionTo(Requested)
+                .Publish(context => new QuotationRequestArrived(context.Saga.CorrelationId,
+                    context.Saga.Name,
+                    context.Saga.MealType,
+                    context.Saga.NumberOfPeople,
+                    context.Saga.CuisinePreferences,
+                    context.Saga.Location,
+                    context.Saga.ReservationDate,
+                    context.Saga.StoveType,
+                    context.Saga.NumberOfBurners,
+                    context.Saga.HasWorkingOven,
+                    context.Saga.ChefPreference,
+                    context.Saga.DietaryRestrictions,
+                    context.Saga.AdditionalComments,
+                    context.Saga.ContactEmail)));
 
             During(Requested,
                 When(QuotationAccepted)

@@ -1,8 +1,47 @@
 version: '3.4'
 
 services:
+  postgresqldb:
+    image: postgres:14.2
+    restart: always
+    environment:
+      POSTGRES_DB: ChefReservationSystem
+      POSTGRES_USER: myusername
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5432:5432"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5671:5671"  # AMQP over TLS
+      - "5672:5672"  # AMQP port
+      - "15671:15671" # Custom port, if needed
+      - "15672:15672" # Management interface port
+      - "15691:15691" # Additional port, if needed
+      - "15692:15692" # Additional port, if needed
+      - "25672:25672" # RabbitMQ clustering port
+      - "4369:4369"   # RabbitMQ EPMD port
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 15s
+      retries: 5
+
   chefreservationsms:
     image: ${DOCKER_REGISTRY-}chefreservationsms
+    restart: on-failure
     build:
       context: .
       dockerfile: ChefReservationsMs/Dockerfile
+    depends_on:
+      - postgresqldb
+      - rabbitmq
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development

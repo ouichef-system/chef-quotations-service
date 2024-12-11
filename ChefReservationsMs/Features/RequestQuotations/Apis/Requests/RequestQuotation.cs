@@ -1,18 +1,18 @@
 ﻿using ChefReservationsMs.Features.Chefs.Enums;
 
-namespace ChefReservationsMs.Features.Quotations.RequestQuotations
+namespace ChefReservationsMs.Features.RequestQuotations.Apis.Requests
 {
     public record RequestQuotation
     {
-        public required string RequestedBy { get; init; }
-        public required string Name { get; init; }
-        public required MealType MealType { get; init; }
+        public required string FirstName { get; init; }
+        public required string LastName { get; init; }
+        public required string MealType { get; init; }
         public int NumberOfPeople { get; init; }
-        public required CuisineType CuisinePreference { get; init; }
+        public required List<string> CuisinePreferences { get; init; }
         public string? OtherCuisinePreference { get; init; }
         public required string Location { get; init; }
         public DateTimeOffset ReservationDate { get; init; }
-        public required string StoveType { get; init; }
+        public string? StoveType { get; init; }
         public int NumberOfBurners { get; init; }
         public bool HasWorkingOven { get; init; }
         public string? ChefPreference { get; init; }

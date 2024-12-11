@@ -1,4 +1,5 @@
 ﻿using ChefReservationsMs.Common_Services.DataAccess;
+using ChefReservationsMs.Features.Quotations.StateMachines.Events;
 using MassTransit;
 using System.Reflection;
 
@@ -21,6 +22,8 @@ namespace ChefReservationsMs.Common_Services.Utils
                 });
                 x.AddSagaStateMachines(entryAssembly);
                 x.AddSagas(entryAssembly);
+
+                x.AddRequestClient<QuotationStarted>();
 
                 x.UsingRabbitMq((context, cfg) =>
                 {

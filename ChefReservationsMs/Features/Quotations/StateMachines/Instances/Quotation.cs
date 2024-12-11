@@ -1,5 +1,5 @@
 ﻿using ChefReservationsMs.Features.Quotations.Entities;
-using ChefReservationsMs.Features.Quotations.RequestQuotations;
+using ChefReservationsMs.Features.RequestQuotations.Aggregate;
 using MassTransit;
 
 namespace ChefReservationsMs.Features.Quotations.StateMachines.Instances
@@ -15,7 +15,7 @@ namespace ChefReservationsMs.Features.Quotations.StateMachines.Instances
         public required string CreatedBy { get; set; }
         public string? UpdatedBy { get; set; }
         public string? ChefComments { get; set; }
-        public required RequestForQuotation RequestForQuotation { get; set; }
+        public RequestForQuotation? RequestForQuotation { get; set; }
         public required Guid RequestForQuotationId { get; set; }
         public decimal Price { get; set; }
         public byte[]? RowVersion { get; set; }

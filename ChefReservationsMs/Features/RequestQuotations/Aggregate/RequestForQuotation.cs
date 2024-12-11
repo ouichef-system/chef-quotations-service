@@ -3,7 +3,7 @@ using ChefReservationsMs.Features.Quotations.Entities;
 using ChefReservationsMs.Features.Quotations.StateMachines.Instances;
 using MassTransit;
 
-namespace ChefReservationsMs.Features.Quotations.RequestQuotations
+namespace ChefReservationsMs.Features.RequestQuotations.Aggregate
 {
     public class RequestForQuotation : SagaStateMachineInstance, IEntity
     {
@@ -14,13 +14,12 @@ namespace ChefReservationsMs.Features.Quotations.RequestQuotations
         public required string CreatedBy { get; set; }
         public string? UpdatedBy { get; set; }
         public required string Name { get; set; }
-        public required MealType MealType { get; set; }
+        public required string MealType { get; set; }
         public int NumberOfPeople { get; set; }
-        public required CuisineType CuisinePreference { get; set; }
-        public string? OtherCuisinePreference { get; set; }
+        public required List<string> CuisinePreferences { get; set; }
         public required string Location { get; set; }
         public DateTimeOffset ReservationDate { get; set; }
-        public required string StoveType { get; set; }
+        public string? StoveType { get; set; }
         public int NumberOfBurners { get; set; }
         public bool HasWorkingOven { get; set; }
         public string? ChefPreference { get; set; }

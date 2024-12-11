@@ -1,9 +1,11 @@
 ﻿using ChefReservationsMs.Features.Quotations.Apis.Requests;
+using ChefReservationsMs.Features.Quotations.Apis.Responses;
 using ChefReservationsMs.Features.Quotations.StateMachines.Events;
+using ChefReservationsMs.Features.Quotations.StateMachines.Responses;
 using MassTransit;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace ChefReservationsMs.Features.Quotations.Apis
+namespace ChefReservationsMs.Features.Quotations
 {
     public static class QuotationsApi
     {
@@ -12,11 +14,11 @@ namespace ChefReservationsMs.Features.Quotations.Apis
             var quotations = endpoint.MapGroup("/quotations");
 
             quotations.MapPost("/", OpenQuotation);
-            quotations.MapPut("/{quotationId}", QuoteQuotation);
-            quotations.MapPut("/{quotationId}", AcceptQuotation);
+            quotations.MapPut("/{quotationId}/quote", QuoteQuotation);
+            quotations.MapPut("/{quotationId}/accept", AcceptQuotation);
         }
 
-        public static async Task<NoContent> OpenQuotation(CreateQuotation quotation, IPublishEndpoint publish)
+        public static async Task<Ok<QuotationOpenedByChefResponse>> OpenQuotation(CreateQuotation quotation, IPublishEndpoint publish, IRequestClient<QuotationStarted> requestClient)
         {
             var quotationRequested = new QuotationStarted
             {
@@ -25,9 +27,9 @@ namespace ChefReservationsMs.Features.Quotations.Apis
                 RequestedBy = quotation.CreatedBy
             };
 
-            await publish.Publish(quotationRequested);
+            var response = await requestClient.GetResponse<QuotationOpenedByChef>(quotationRequested);
 
-            return TypedResults.NoContent();
+            return TypedResults.Ok(new QuotationOpenedByChefResponse { QuotationId = response.Message.QuotationId });
         }
 
         public static async Task<Accepted> QuoteQuotation(QuoteQuotation quotation, Guid quotationId, IPublishEndpoint publish)

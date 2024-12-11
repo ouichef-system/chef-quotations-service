@@ -20,18 +20,18 @@ namespace ChefReservationsMs.Features.Chefs.Apis.Handlers
             var pendingRequestForQuotations = _chefReservationsContext.RequestForQuotations
                     .AsNoTracking()
                     .Include(rfq => rfq.Quotations)
-                    .Where(rfq => rfq.ReservationDate >= DateTimeOffset.UtcNow && rfq.CurrentState == "Pending")
+                    .Where(rfq => rfq.ReservationDate >= DateTimeOffset.UtcNow && rfq.CurrentState == "Requested")
                     .AsSplitQuery();
 
             var result = await pendingRequestForQuotations.Select(x => new ChefRequestForQuotation
             {
-                CuisinePreference = x.CuisinePreference,
+                RequestForQuotationId = x.CorrelationId,
+                CuisinePreferences = x.CuisinePreferences,
                 Location = x.Location,
                 MealType = x.MealType,
                 NumberOfPeople = x.NumberOfPeople,
-                OtherCuisinePreference = x.OtherCuisinePreference,
                 ReservationDate = x.ReservationDate,
-                ChefAlreadyQuoted = x.Quotations.Any(q => q.CurrentState != "Opened" && q.ChefId == request.ChefId)
+                ChefAlreadyQuoted = x.Quotations.Any(q => q.ChefId == request.ChefId)
             }).ToListAsync(cancellationToken: cancellationToken);
 
             return new ViewModel<ReadOnlyCollection<ChefRequestForQuotation>>

@@ -1,17 +1,13 @@
-﻿using ChefReservationsMs.Features.Chefs.Enums;
-using MassTransit;
-
-namespace ChefReservationsMs.Features.Quotations.RequestQuotations
+﻿namespace ChefReservationsMs.Features.Quotations.ObtainQuotations
 {
-    public record ClientRequestReceived : CorrelatedBy<Guid>
+    public record QuotationView
     {
-        public Guid CorrelationId => RequestForQuotationId;
-        public Guid RequestForQuotationId { get; set; } = NewId.NextSequentialGuid();
-        public required string Name { get; init; }
-        public MealType MealType { get; init; }
+        public required string ChefName { get; init; }
+        public required Guid ChefId { get; init; }
+        public required string ClientName { get; init; }
+        public required string MealType { get; init; }
         public int NumberOfPeople { get; init; }
-        public CuisineType CuisinePreference { get; init; }
-        public string? OtherCuisinePreference { get; init; }
+        public required List<string> CuisinePreferences { get; init; }
         public required string Location { get; init; }
         public DateTimeOffset ReservationDate { get; init; }
         public required string StoveType { get; init; }

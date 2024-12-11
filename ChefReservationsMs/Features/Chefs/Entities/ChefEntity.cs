@@ -5,6 +5,7 @@ namespace ChefReservationsMs.Features.Chefs.Entities
     public class ChefEntity : IEntity
     {
         public required Guid Id { get; set; }
+        public required Guid AuthUserId { get; set; }
         public required DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public required string CreatedBy { get; set; }

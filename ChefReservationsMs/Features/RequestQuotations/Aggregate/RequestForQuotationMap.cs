@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChefReservationsMs.Features.Quotations.RequestQuotations
+namespace ChefReservationsMs.Features.RequestQuotations.Aggregate
 {
     public class RequestForQuotationMap : SagaClassMap<RequestForQuotation>
     {
@@ -14,7 +14,7 @@ namespace ChefReservationsMs.Features.Quotations.RequestQuotations
             entity.Property(x => x.MealType)
                 .HasConversion<string>();
 
-            entity.Property(x => x.CuisinePreference)
+            entity.Property(x => x.CuisinePreferences)
                 .HasConversion<string>();
 
             entity.Property(x => x.CurrentState)

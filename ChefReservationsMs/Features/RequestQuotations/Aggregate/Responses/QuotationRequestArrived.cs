@@ -1,11 +1,11 @@
-﻿namespace ChefReservationsMs.Features.Quotations.StateMachines.Responses
+﻿namespace ChefReservationsMs.Features.RequestQuotations.Aggregate.Responses
 {
     public record QuotationRequestArrived(
     Guid QuotationId,
     string Name,
     string MealType,
     int NumberOfPeople,
-    string CuisinePreference,
+    List<string> CuisinePreferences,
     string Location,
     DateTimeOffset ReservationDate,
     string StoveType,

@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 
-namespace ChefReservationsMs.Features.Quotations.StateMachines.Responses
+namespace ChefReservationsMs.Features.RequestQuotations.Aggregate.Events
 {
     public record QuotationSuccesfullyAccepted : CorrelatedBy<Guid>
     {

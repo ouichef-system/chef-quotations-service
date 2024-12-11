@@ -1,6 +1,7 @@
 ﻿using ChefReservationsMs.Features.Quotations.StateMachines.Events;
 using ChefReservationsMs.Features.Quotations.StateMachines.Instances;
 using ChefReservationsMs.Features.Quotations.StateMachines.Responses;
+using ChefReservationsMs.Features.RequestQuotations.Aggregate.Events;
 using MassTransit;
 
 namespace ChefReservationsMs.Features.Quotations.StateMachines
@@ -29,23 +30,10 @@ namespace ChefReservationsMs.Features.Quotations.StateMachines
                         context.Saga.ChefId = context.Message.ChefId;
                     })
                     .TransitionTo(Opened)
-                    .PublishAsync(context => context.Init<QuotationRequestArrived>(new
+                    .Respond(context => new QuotationOpenedByChef
                     {
-                        QuotationId = context.Saga.CorrelationId,
-                        context.Saga.RequestForQuotation.Name,
-                        context.Saga.RequestForQuotation.MealType,
-                        context.Saga.RequestForQuotation.NumberOfPeople,
-                        context.Saga.RequestForQuotation.CuisinePreference,
-                        context.Saga.RequestForQuotation.Location,
-                        context.Saga.RequestForQuotation.ReservationDate,
-                        context.Saga.RequestForQuotation.StoveType,
-                        context.Saga.RequestForQuotation.NumberOfBurners,
-                        context.Saga.RequestForQuotation.HasWorkingOven,
-                        context.Saga.RequestForQuotation.ChefPreference,
-                        context.Saga.RequestForQuotation.DietaryRestrictions,
-                        context.Saga.RequestForQuotation.AdditionalComments,
-                        context.Saga.RequestForQuotation.ContactEmail
-                    })));
+                        QuotationId = context.Saga.CorrelationId
+                    }));
 
             During(Opened,
                 When(QuotationQuoted)
@@ -64,8 +52,13 @@ namespace ChefReservationsMs.Features.Quotations.StateMachines
                         context.Saga.ChefName ?? string.Empty,
                         context.Saga.Price,
                         context.Saga.ChefComments,
-                        context.Saga.RequestForQuotation.ContactEmail
-                    ))));
+                        "context.Saga.RequestForQuotation.ContactEmail"
+                    ))),
+                When(QuotationStarted)
+                    .Respond(context => new QuotationOpenedByChef
+                    {
+                        QuotationId = context.Saga.CorrelationId
+                    }));
 
             During(Quoted,
                 When(QuotationAccepted)

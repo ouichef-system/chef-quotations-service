@@ -3,8 +3,10 @@ using ChefReservationsMs.Common_Services.Utils;
 using ChefReservationsMs.Features.Chefs.Apis.Handlers;
 using ChefReservationsMs.Features.Chefs.Apis.Requests;
 using ChefReservationsMs.Features.Chefs.Apis.Views;
-using ChefReservationsMs.Features.Quotations.Apis;
-using ChefReservationsMs.Features.Quotations.RequestQuotations;
+using ChefReservationsMs.Features.Quotations;
+using ChefReservationsMs.Features.Quotations.ObtainQuotations;
+using ChefReservationsMs.Features.RequestQuotations.Apis;
+using ChefReservationsMs.Features.Chefs.Apis;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Reflection;
@@ -28,10 +30,23 @@ builder.Services.Configure<Microsoft.AspNetCore.Mvc.JsonOptions>(options =>
 });
 #endregion
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddQueryHandler<ObtainQuotationsRequest, ReadOnlyCollection<QuotationView>, ObtainQuotationsHandler>();
 builder.Services.AddQueryHandler<PendingChefRequestForQuotation, ReadOnlyCollection<ChefRequestForQuotation>, ChefRequestForQuotationsHandler>();
+builder.Services.AddQueryHandler<PendingRequestForQuotation, ReadOnlyCollection<RequestForQuotation>, RequestForQuotationsHandler>();
 
 builder.Services.AddDbContextFactory<ChefReservationsDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("SagasRepository"), m =>
@@ -56,10 +71,13 @@ if (app.Environment.IsDevelopment())
 
     await using var scope = app.Services.CreateAsyncScope();
     using var db = scope.ServiceProvider.GetService<ChefReservationsDbContext>()!;
+    db.Database.EnsureDeleted();
     await db.Database.MigrateAsync();
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
